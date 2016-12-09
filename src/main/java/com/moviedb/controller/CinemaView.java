@@ -80,7 +80,7 @@ public class CinemaView extends HttpServlet {
         //Data.save(Fetcher.fetch(URL.Cinema.toString()));
         
         
-        request.setAttribute("data", Fetcher.fetch(URL.Cinema));
+        request.setAttribute("data", Fetcher.fetch(URL.Movie));
         
         RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/cinemaView.jsp");
         view.forward(request, response);
