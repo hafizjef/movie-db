@@ -27,7 +27,7 @@ public class URL {
             case "cinema":
                 return cinemaURL();
             case "movie":    
-                // TODO; Implement movieURL();
+                return movieURL();
                 
             default:
                 return null;
@@ -49,6 +49,21 @@ public class URL {
                         .addParameter("_dc", String.valueOf(Instant.now().toEpochMilli()))
                         .addParameter("service", "tgvMobileService")
                         .addParameter("action", "getCinemaList3")
+                        .addParameter("mimeType", "application/json");
+                
+                return url.build().toString();
+            
+            } catch (URISyntaxException ex) { }
+        
+        return null;
+    }
+    
+    private String movieURL() {
+        try { 
+                URIBuilder url = new URIBuilder("http://tgv.api.lb.appxtream.com/jsonFeed.action")
+                        .addParameter("_dc", String.valueOf(Instant.now().toEpochMilli()))
+                        .addParameter("service", "tgvMobileService")
+                        .addParameter("action", "getMovieList4")
                         .addParameter("mimeType", "application/json");
                 
                 return url.build().toString();
