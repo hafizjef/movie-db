@@ -7,8 +7,9 @@ package com.moviedb.controller;
 
 import com.moviedb.builder.Cinema;
 import com.moviedb.database.DBConnection;
-import com.moviedb.tasks.CinemaUpdater;
+import com.moviedb.tasks.Fetcher;
 import com.moviedb.tasks.Data;
+import com.utils.url.URL;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -74,9 +75,12 @@ public class CinemaView extends HttpServlet {
         
         
         request.setAttribute("cinemas", cine1);
-        //request.setAttribute("test", CinemaUpdater.update());
+        //request.setAttribute("test", Fetcher.fetchCinemaData());
         
-        Data.save(CinemaUpdater.update());
+        //Data.save(Fetcher.fetch(URL.Cinema.toString()));
+        
+        
+        request.setAttribute("data", Fetcher.fetch(URL.Cinema));
         
         RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/cinemaView.jsp");
         view.forward(request, response);

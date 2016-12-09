@@ -17,6 +17,6 @@
         <h2>${cinemas.id}</h2>
         <h2>${cinemas.halls}</h2>
         
-        <h3>${test}</h3>
+        <p>${data}</p>
     </body>
 </html>
