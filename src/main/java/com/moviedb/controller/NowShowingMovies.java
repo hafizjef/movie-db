@@ -1,5 +1,7 @@
 package com.moviedb.controller;
 
+import com.moviedb.tasks.Fetcher;
+import com.utils.url.URL;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +19,7 @@ public class NowShowingMovies extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+
         
         RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/nowShowing.jsp");
         view.forward(request, response);

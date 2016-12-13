@@ -29,6 +29,10 @@ public class Data {
         List<Movies> movies = new ArrayList<>();
         JSONParser parser = new JSONParser();
         
+        Object rawMovieInfo;
+        JSONObject jsonInfo;
+        JSONObject jsonInfoList;
+        
         
         try {
             Object rawMovieData = parser.parse(Fetcher.fetch(URL.Movie));
@@ -40,8 +44,22 @@ public class Data {
             while(movie.hasNext()) {
                 JSONObject mv = (JSONObject) movie.next();
                 
+                
+                rawMovieInfo = parser.parse(Fetcher.fetch(URL.getMovieInfo(mv.get("internalMovieId").toString())));
+                jsonInfo = (JSONObject) rawMovieInfo;
+                jsonInfoList = (JSONObject) jsonInfo.get("movie");
+                
+                
                 Movies moviedata = new Movies.Builder(mv.get("internalMovieName").toString())
                         .internalId(mv.get("internalMovieId").toString())
+                        .cast(jsonInfoList.get("cast").toString())
+                        .director(jsonInfoList.get("director").toString())
+                        .genre(jsonInfoList.get("genre").toString())
+                        .LANG(jsonInfoList.get("movieLanguage").toString())
+                        .plot(jsonInfoList.get("plot").toString())
+                        .releaseDate(jsonInfoList.get("releaseDate").toString())
+                        .runtime(jsonInfoList.get("runtime").toString())
+                        .trailerId(jsonInfoList.get("youtubeTrailerId").toString())
                         .posterURL(mv.get("movieImageUrl").toString())
                         .rating(mv.get("rating").toString())
                         .build();

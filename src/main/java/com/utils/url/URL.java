@@ -9,14 +9,28 @@ import org.apache.http.client.utils.URIBuilder;
  * @author Falcon
  */
 public class URL {
+    
     private final String value;
+    private static String param;
     
     public URL(String value) {
         this.value = value;
     }
     
+    public URL(String value, String param) {
+        this.value = value;
+        URL.param = param;
+    }
+    
     public static final URL Cinema = new URL("cinema");
     public static final URL Movie = new URL("movie");
+    
+    
+    public static final URL getMovieInfo(String movieTitle) {
+        URL mv = new URL("movieInfo", movieTitle);
+        URL.param = mv.movieInfoURL(movieTitle);
+        return mv;
+    }
     
 
     @Override
@@ -28,6 +42,8 @@ public class URL {
                 return cinemaURL();
             case "movie":    
                 return movieURL();
+            case "movieInfo":
+                return URL.param;
                 
             default:
                 return null;
@@ -65,6 +81,22 @@ public class URL {
                         .addParameter("service", "tgvMobileService")
                         .addParameter("action", "getMovieList4")
                         .addParameter("mimeType", "application/json");
+                
+                return url.build().toString();
+            
+            } catch (URISyntaxException ex) { }
+        
+        return null;
+    }
+    
+    private String movieInfoURL(String internalMovieName) {
+        try { 
+                URIBuilder url = new URIBuilder("http://tgv.api.lb.appxtream.com/jsonFeed.action")
+                        .addParameter("_dc", String.valueOf(Instant.now().toEpochMilli()))
+                        .addParameter("service", "tgvMobileService")
+                        .addParameter("action", "getMovieDetail2")
+                        .addParameter("mimeType", "application/json")
+                        .addParameter("p1", internalMovieName);
                 
                 return url.build().toString();
             

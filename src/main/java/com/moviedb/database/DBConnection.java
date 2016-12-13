@@ -10,6 +10,7 @@ import com.moviedb.listener.Config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +79,11 @@ public class DBConnection {
                     Connection con = dataStore.getConnection();
                     PreparedStatement ps = PreparedStatements.insertMovie(con, 
                             movie.getName(), movie.getInternalId(), 
-                            movie.getRating(), movie.getPosterURL());
+                            movie.getRating(), movie.getPosterURL(),
+                            movie.getCast(), movie.getDirector(),
+                            movie.getGenre(), movie.getLang(), movie.getPlot(),
+                            movie.getReleaseDate(), movie.getRuntime(),
+                            movie.getTrailerId());
                     
                 ) {
                 
@@ -87,7 +92,7 @@ public class DBConnection {
                 if (rs == 0) {
                     System.out.println("No movies inserted");
                 } else {
-                    System.out.println(rs + " rows inserted");
+                    //System.out.println(rs + " rows inserted");
                 }
                 
             } catch (Exception e) { System.out.println(e.getMessage()); }
@@ -95,6 +100,11 @@ public class DBConnection {
             
         }
         
+    }
+    
+    public List<Movies> getNowShowing() {
+        List<Movies> movies = new ArrayList<>();
+        return movies;
     }
     
 }

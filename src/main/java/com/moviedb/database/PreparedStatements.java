@@ -28,10 +28,14 @@ public class PreparedStatements {
     }
     
     protected static PreparedStatement insertMovie(Connection con, String name, String internalName,
-                        String rating, String posterURL) throws SQLException {
+                        String rating, String posterURL, String cast, String director,
+                        String genre, String lang, String plot, String relDate,
+                        String runtime, String trailer) throws SQLException {
         
-        String sql = "INSERT INTO movies(name, internal_name, rating, poster_url, now_showing)"
-                + " VALUES(?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE now_showing = VALUES(now_showing)";
+        String sql = "INSERT INTO movies(name, internal_name, rating, poster_url, now_showing, "
+                + "cast, director, genre, language, plot, release_date, runtime, trailer)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE now_showing = VALUES(now_showing)";
         
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, name);
@@ -39,6 +43,14 @@ public class PreparedStatements {
         ps.setString(3, rating);
         ps.setString(4, posterURL);
         ps.setInt(5, 1);
+        ps.setString(6, cast);
+        ps.setString(7, director);
+        ps.setString(8, genre);
+        ps.setString(9, lang);
+        ps.setString(10, plot);
+        ps.setString(11, relDate);
+        ps.setString(12, runtime);
+        ps.setString(13, trailer);
         
         return ps;
     }

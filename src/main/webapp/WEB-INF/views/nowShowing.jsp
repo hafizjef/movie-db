@@ -13,10 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1><c:out value="${cinemas.name}"/></h1>
-        <h2>${cinemas.id}</h2>
-        <h2>${cinemas.halls}</h2>
-        
-        <p>${data}</p>
+        <p>Test</p>
     </body>
 </html>
