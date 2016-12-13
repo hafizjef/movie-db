@@ -104,7 +104,35 @@ public class DBConnection {
     
     public List<Movies> getNowShowing() {
         List<Movies> movies = new ArrayList<>();
-        return movies;
+        
+        try (
+                Connection con = dataStore.getConnection();
+                PreparedStatement ps = PreparedStatements.getMovies(con);
+                ResultSet rs = ps.executeQuery();
+            ) {
+            
+            while (rs.next()) {
+                Movies mv = new Movies.Builder(rs.getString("name"))
+                        .LANG(rs.getString("language"))
+                        .rating(rs.getString("rating"))
+                        .plot(rs.getString("plot"))
+                        .director(rs.getString("director"))
+                        .posterURL(rs.getString("poster_url"))
+                        .genre(rs.getString("genre"))
+                        .releaseDate(rs.getString("release_date"))
+                        .runtime(rs.getString("runtime"))
+                        .trailerId(rs.getString("trailer"))
+                        .cast(rs.getString("cast"))
+                        .internalId(rs.getString("internal_name"))
+                        .build();
+                movies.add(mv);
+            }
+            
+            return movies;
+        
+        } catch (Exception e) {}
+        
+        return null;
     }
     
 }

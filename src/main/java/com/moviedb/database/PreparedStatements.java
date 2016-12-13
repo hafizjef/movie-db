@@ -55,4 +55,10 @@ public class PreparedStatements {
         return ps;
     }
     
+    protected static PreparedStatement getMovies(Connection con) throws SQLException {
+        String sql = "SELECT * FROM movies WHERE now_showing = 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        return ps;
+    }
+    
 }

@@ -1,8 +1,9 @@
 package com.moviedb.controller;
 
-import com.moviedb.tasks.Fetcher;
-import com.utils.url.URL;
+import com.moviedb.builder.Movies;
+import com.moviedb.database.DBConnection;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +20,10 @@ public class NowShowingMovies extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-
+        DBConnection db = (DBConnection) getServletContext().getAttribute("db");
+        List<Movies> mv = db.getNowShowing();
         
+        request.setAttribute("movies", mv);        
         RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/nowShowing.jsp");
         view.forward(request, response);
     }
