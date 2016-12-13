@@ -21,6 +21,6 @@
         <listener-class>com.moviedb.listener.Config</listener-class>
     </listener>
     <listener>
-         <listener-class>com.moviedb.tasks.Tasker</listener-class>
+        <listener-class>com.moviedb.tasks.TaskRunner</listener-class>
     </listener>
 </web-app>

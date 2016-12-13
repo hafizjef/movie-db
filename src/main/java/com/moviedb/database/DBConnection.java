@@ -5,10 +5,12 @@
  */
 package com.moviedb.database;
 
+import com.moviedb.builder.Movies;
 import com.moviedb.listener.Config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -48,6 +50,51 @@ public class DBConnection {
         } catch (Exception e) {}
         
         return name;
+    }
+    
+    public void prepareMvUpdate() {
+        
+        try (
+                Connection con = dataStore.getConnection();
+                PreparedStatement ps = PreparedStatements.setNowShowing(con);
+                
+            ) {
+            
+            int rs = ps.executeUpdate();
+            
+            if (rs == 0) {
+                System.out.println("No rows affected");
+            }
+            
+        } catch (Exception e) {}
+    }
+    
+    public void updateMovies(List<Movies> mv) {
+        
+        for (Movies movie: mv) {
+            
+            
+            try (
+                    Connection con = dataStore.getConnection();
+                    PreparedStatement ps = PreparedStatements.insertMovie(con, 
+                            movie.getName(), movie.getInternalId(), 
+                            movie.getRating(), movie.getPosterURL());
+                    
+                ) {
+                
+                int rs = ps.executeUpdate();
+                
+                if (rs == 0) {
+                    System.out.println("No movies inserted");
+                } else {
+                    System.out.println(rs + " rows inserted");
+                }
+                
+            } catch (Exception e) { System.out.println(e.getMessage()); }
+            
+            
+        }
+        
     }
     
 }

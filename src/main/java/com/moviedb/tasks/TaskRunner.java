@@ -5,9 +5,11 @@
  */
 package com.moviedb.tasks;
 
+import com.moviedb.database.DBConnection;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -18,14 +20,21 @@ import javax.servlet.annotation.WebListener;
  */
 
 @WebListener
-public class Tasker implements ServletContextListener{
+public class TaskRunner implements ServletContextListener{
     private ScheduledExecutorService scheduler;
     
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        System.out.println("Context Init");
+        
+        
+        // Initialize Database
+        ServletContext sc = event.getServletContext();
+        DBConnection db = new DBConnection(sc);
+        sc.setAttribute("db", db);
+        
+        
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new TestClock(), 0, 20, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new GetMovies(sc), 0, 20, TimeUnit.MINUTES);
     }
     
     @Override
