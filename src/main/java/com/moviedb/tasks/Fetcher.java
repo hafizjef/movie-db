@@ -2,13 +2,10 @@ package com.moviedb.tasks;
 
 import com.utils.url.URL;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.Instant;
 import java.util.logging.Logger;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.http.client.utils.URIBuilder;
 
 
 
