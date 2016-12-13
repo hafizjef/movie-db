@@ -22,23 +22,21 @@ import org.json.simple.parser.ParseException;
  *
  * @author Falcon
  */
-public class movieFetcher {
+public class Data {
     
-    public static List fetch(){
+    public static List fetchMovies(){
         
         List<Movies> movies = new ArrayList<>();
         JSONParser parser = new JSONParser();
         
+        
         try {
             Object rawMovieData = parser.parse(Fetcher.fetch(URL.Movie));
-            
             JSONObject jsonMovie = (JSONObject) rawMovieData;
             JSONArray movieList = (JSONArray) jsonMovie.get("movies");
             
             Iterator movie = movieList.iterator();
-            
-            
-            
+
             while(movie.hasNext()) {
                 JSONObject mv = (JSONObject) movie.next();
                 
@@ -54,7 +52,7 @@ public class movieFetcher {
             return movies;
             
         } catch (IOException | ParseException ex) {
-            Logger.getLogger(movieFetcher.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;

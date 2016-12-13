@@ -34,7 +34,7 @@ public class TaskRunner implements ServletContextListener{
         
         
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new GetMovies(sc), 0, 20, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new MovieUpdater(sc), 0, 20, TimeUnit.MINUTES);
     }
     
     @Override

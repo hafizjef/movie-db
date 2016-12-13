@@ -12,14 +12,14 @@ import javax.servlet.ServletContext;
  * Get Movie list & save to database
  * @author Falcon
  */
-public class GetMovies implements Runnable {
+public class MovieUpdater implements Runnable {
     
-    private static final Logger log = Logger.getLogger(GetMovies.class.getName());
+    private static final Logger log = Logger.getLogger(MovieUpdater.class.getName());
     
     private final DBConnection db;
 
     
-    public GetMovies(ServletContext context) {
+    public MovieUpdater(ServletContext context) {
         this.db = (DBConnection) context.getAttribute("db");
     }
 
@@ -28,7 +28,7 @@ public class GetMovies implements Runnable {
         
         log.log(Level.INFO, "Task runner: {0}", new Date());
         
-        List<Movies> mv = movieFetcher.fetch();
+        List<Movies> mv = Data.fetchMovies();
         
         db.prepareMvUpdate();
         db.updateMovies(mv);
