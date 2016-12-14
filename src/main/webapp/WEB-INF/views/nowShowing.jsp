@@ -19,9 +19,9 @@
                                         <img src="http://tgv.static.appxtream.com/${movie.posterURL}" width="230">
                                         <hr>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#movie-info" data-moviename="${movie.name}" data-cast="${movie.cast}" data-plot="${movie.plot}">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#movie-info" data-moviename="${movie.name}" data-cast="${movie.cast}" data-plot='${movie.plot}' data-language="${movie.lang}">
                                                 <i class="fa fa-info-circle" aria-hidden="true"></i> More Info</button>
-                                            <button type="button" class="btn btn-danger" style="min-height: 45px; max-height: 45px"><i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="font-size: 1.5em"></i></button>
+                                            <button type="button" class="btn btn-danger" style="min-height: 45px; max-height: 45px" data-toggle="modal" data-target="#movie-trailer" data-source="https://www.youtube.com/v/${movie.trailerId}&amp;autoplay=1" data-mvtitle="${movie.name}"><i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="font-size: 1.5em"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -43,14 +43,32 @@
                     <!--modal-content--> 
                     <div class="modal-body">
                         <h4>Title:</h4>
-                        <mark><span id="title"></span></mark>
+                        <div class="well-sm"><mark><span id="title"></span></mark></div>
+                        <h4>Language:</h4>
+                        <div class="well-sm"><kbd id="lang"></kbd></div>
                         <h4>Cast:</h4>
-                        <span id="cast"></span>
+                        <div class="well-sm" id="cast"></div>
                         <h4>Plot:</h4>
-                        <span id="plot"></span>
+                        <div class="well-sm"><i id="plot"></i></div>
                     </div>
                     <div class="modal-footer ">
                         
+                    </div>
+                </div>
+            </div>
+            <!--modal-dialog-->
+        </div>
+        
+        <div class="modal fade" id="movie-trailer" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                        <h4 class="modal-title" id="Heading">Movie Trailer</h4>
+                    </div>                                                
+                    <!--modal-content--> 
+                    <div class="modal-body">
+                        <iframe style="width:100%; height:100%;" frameborder="0" allowfullscreen=""></iframe>
                     </div>
                 </div>
             </div>
@@ -66,16 +84,32 @@
               var cast = button.data('cast'); // Extract info from data-* attribute
               var plot = button.data('plot');
               var moviename = button.data('moviename');
+              var language = button.data('language');
 
-              // Update the modal's content.
+
               var modal = $(this);
-              modal.find('#cast').html('<i>'+cast+'</i>');
-              modal.find('#plot').html('<i>' + plot + '</i>');
+              modal.find('#cast').text(cast);
+              modal.find('#plot').text(plot);
               modal.find('#title').text(moviename);
+              modal.find('#lang').text(language);
 
-              // And if you wish to pass the productid to modal's 'Yes' button for further processing
-              //modal.find('button.btn-warning').val(username);
             });
+            
+            $('#movie-trailer').on('show.bs.modal', function (event){
+               var button = $(event.relatedTarget);
+               var source = button.data('source');
+               var title = button.data('mvtitle');
+               
+               var modal = $(this);
+               modal.find('iframe').attr('src', source);
+               modal.find('#Heading').text(title);
+            });
+            
+            $('#movie-trailer').on('hidden.bs.modal', function () {
+                var modal = $(this);
+                modal.find('iframe').removeAttr('src');
+            });
+            
         });
     </script>
 </t:Base>
